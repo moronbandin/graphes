@@ -25,10 +25,10 @@ function parseMarkdown(md) {
 fetch("data/gallery.json")
   .then((response) => response.json())
   .then((data) => {
-    images = data;
-    renderGallery(data);
+    images = data.sort(() => Math.random() - 0.5); // orde aleatoria
+    renderGallery(images);
   })
-  .catch((err) => console.error("Erro cargando JSON:", err));
+
 
 // --- CREACIÓN DAS TARXETAS ---
 function renderGallery(data) {

@@ -12,6 +12,15 @@ const nextBtn = document.getElementById("nextBtn");
 let images = [];
 let currentIndex = 0;
 
+
+function parseMarkdown(md) {
+  return md
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/g, "<em>$1</em>")
+    .replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2' target='_blank'>$1</a>");
+}
+
+
 // --- CARGA DO JSON ---
 fetch("data/gallery.json")
   .then((response) => response.json())
@@ -79,8 +88,8 @@ function showInfo(index) {
   infoPanel.innerHTML = `
     <h2>${item.text}</h2>
     <p><strong>Transcrición:</strong> ${item.transcription}</p>
-    <p><strong>Etimoloxía:</strong> ${item.etymology}</p>
-    <p><strong>Comentario:</strong> ${item.comment}</p>
+    <p><strong>Etimoloxía:</strong> ${parseMarkdown(item.etymology)}</p>
+    <p><strong>Comentario:</strong> ${parseMarkdown(item.comment)}</p>
     <p><em>${item.category}</em> · ${item.location}</p>
   `;
   infoPanel.classList.remove("hidden");

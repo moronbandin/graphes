@@ -37,7 +37,7 @@
   }
   body.light header {
     background: rgba(255,255,255,0.75);
-    color: var(--fg-light);
+    color: #ffffff; /* texto escuro sobre fondo claro (ou cambia a branco se prefires) */
     border-color: rgba(0,0,0,0.1);
   }
   header h1 {
@@ -150,6 +150,13 @@
     border-right: 1px solid rgba(255,255,255,0.08);
   }
   
+  /* --- Texto branco e fondo escuro no modo claro dentro da modal --- */
+body.light .modal-content,
+body.light #infoPanel {
+  color: #fff !important;
+  background: rgba(20, 20, 20, 0.85) !important;
+}
+
   /* === PANEL DERECHA (40%) === */
   #infoPanel {
     flex: 0 0 40%;

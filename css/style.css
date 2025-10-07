@@ -180,11 +180,17 @@ body.light #infoPanel {
     color: #111;
   }
   #infoPanel.hidden {
-    transform: translateX(100%);
+    visibility: hidden;
     opacity: 0;
+    transform: translateX(20px);
     pointer-events: none;
+  } 
+  #infoPanel {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s ease, transform 0.3s ease;
   }
-  
+      
   /* === BOTÓN ℹ︎ DISCRETO === */
   #infoButton {
     position: absolute;

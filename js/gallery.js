@@ -92,9 +92,18 @@ function showInfo(index) {
     <p><strong>Comentario:</strong> ${parseMarkdown(item.comment)}</p>
     <p><em>${item.category}</em> · ${item.location}</p>
   `;
+
+  // 👇 forza Safari a repintar antes de facelo visible
+  infoPanel.style.display = "block";
+  void infoPanel.offsetHeight;
   infoPanel.classList.remove("hidden");
   infoButton.textContent = "✕";
 }
+
+// Forza Safari a repintar a capa
+setTimeout(() => {
+  infoPanel.style.webkitTransform = "translateZ(0)";
+}, 10);
 
 // --- NAVEGACIÓN CON TECLADO ---
 document.addEventListener("keydown", (e) => {

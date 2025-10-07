@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="gl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Γραφές · O grego que se ve</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>Γραφές · O grego que se ve</h1>
+    <button id="themeToggle" title="Alternar modo claro/escuro">☾</button>
+  </header>
+
+  <main class="intro">
+    <section>
+      <p>
+        <strong>Γραφές</strong> é unha galería dixital de sinais, carteis e pintadas en grego moderno
+        que amosan a continuidade viva da lingua grega dende a Antigüidade ata hoxe.
+      </p>
+      <p>
+        Cada imaxe vai acompañada dun breve comentario filolóxico, pensado para estudar o grego antigo
+        a partir da realidade contemporánea, entre a rúa e o mito.
+      </p>
+      <a href="galeria.html" class="enter">Entrar na galería →</a>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 · Proxecto Graphés
+  </footer>
+
+  <script>
+  // Alterna entre modo claro e escuro
+  const btn = document.getElementById("themeToggle");
+  btn.addEventListener("click", () => {
+    document.body.classList.toggle("light");
+    btn.textContent = document.body.classList.contains("light") ? "☀" : "☾";
+  });
+  </script>
+</body>
+</html>

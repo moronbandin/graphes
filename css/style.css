@@ -23,6 +23,11 @@
     color: var(--fg-light);
   }
   
+  body.light header h1 {
+    color: #000; /* negro lexíbel en modo claro */
+    text-shadow: none; /* elimina o brillo branco */
+  }
+  
   /* === CABECEIRA === */
   header {
     position: sticky;
@@ -246,7 +251,15 @@ body.light #infoPanel {
   }
   .nav-arrow.left { left: 1rem; }
   .nav-arrow.right { right: 1rem; }
+
+  #infoPanel {
+    -webkit-overflow-scrolling: touch; /* scroll suave en iOS */
+  }
   
+  .modal {
+    touch-action: manipulation; /* evita bloqueos de interacción en móbiles */
+  }  
+
   @media (max-width: 900px) {
     /* En pantallas pequeñas: vista apilada */
     .modal-content {

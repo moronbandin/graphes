@@ -1,2 +1,4 @@
-script.py
-.vscode
+.vscode/
+.DS_Store
+__pycache__/
+.streamlit/

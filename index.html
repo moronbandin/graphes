@@ -1,52 +1,267 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="gl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>γραφές</title>
-
-  <!-- estilos e fontes -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Arquivo visual de voces gregas modernas en diálogo coa lingua e a cultura antigas.">
+  <meta name="theme-color" content="#171712">
+  <title>γραφές · O grego que se ve</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Marcellus&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500&display=swap" rel="stylesheet">
-
-  <!-- favicon e cor do tema -->
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/favicon.png">
-  <meta name="theme-color" content="#0e0e0f">
-
   <script defer src="js/gallery.js"></script>
 </head>
 
 <body>
-  <header>
-    <h1>γραφές</h1>
-    <button id="themeToggle" title="Alternar modo claro/escuro">☾</button>
+  <a class="skip-link" href="#arquivo">Saltar ao arquivo</a>
+
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="Graphes, inicio">
+      <span class="brand-mark" lang="el">γραφές</span>
+      <span class="brand-subtitle">O grego que se ve</span>
+    </a>
+    <nav class="header-actions" aria-label="Accións principais">
+      <button class="text-button" type="button" data-open-about>Sobre o proxecto</button>
+      <button class="primary-button compact" type="button" data-open-contribute>
+        <span aria-hidden="true">＋</span> Achegar unha voz
+      </button>
+      <button class="icon-button" id="themeToggle" type="button" aria-label="Activar modo claro" title="Cambiar tema">
+        <span aria-hidden="true">☼</span>
+      </button>
+    </nav>
   </header>
 
-  <main id="gallery" class="gallery"></main>
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <p class="eyebrow">Arquivo visual · Grecia contemporánea</p>
+      <h1 id="hero-title">A antigüidade aínda<br><em>escribe nos muros.</em></h1>
+      <p class="hero-copy">
+        Pintadas, cartaces e sinais en grego moderno, lidos como pegadas dunha lingua
+        viva que segue a conversar co seu pasado.
+      </p>
+      <div class="hero-meta" aria-label="Resumo da colección">
+        <span><strong id="totalCount">—</strong> voces documentadas</span>
+        <span aria-hidden="true">·</span>
+        <span>Un arquivo aberto e en movemento</span>
+      </div>
+    </section>
 
-  <!-- Modal -->
-  <div id="imageModal" class="modal hidden">
-    <div class="modal-content">
-      <span class="close">&times;</span>
-      <button class="nav-arrow left" id="prevBtn">❮</button>
-      <img id="modalImage" src="" alt="">
-      <button class="nav-arrow right" id="nextBtn">❯</button>
+    <section class="archive" id="arquivo" aria-labelledby="archive-title">
+      <div class="archive-heading">
+        <div>
+          <p class="eyebrow">Explorar</p>
+          <h2 id="archive-title">O arquivo</h2>
+        </div>
+        <p class="archive-count" id="resultCount" aria-live="polite">Cargando a colección…</p>
+      </div>
 
-      <!-- este botón só aparece cando se abre o modal -->
-      <button id="infoButton" class="hidden">ℹ︎</button>
-      <div id="infoPanel" class="hidden"></div>
+      <div class="toolbar" role="search">
+        <label class="search-field">
+          <span class="sr-only">Buscar na colección</span>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="m20 20-4-4"></path>
+          </svg>
+          <input id="searchInput" type="search" placeholder="Buscar texto, lugar ou comentario…" autocomplete="off">
+        </label>
+        <label class="select-field">
+          <span class="sr-only">Filtrar por categoría</span>
+          <select id="categoryFilter">
+            <option value="">Todas as categorías</option>
+          </select>
+        </label>
+        <label class="select-field">
+          <span class="sr-only">Ordenar colección</span>
+          <select id="sortSelect">
+            <option value="curated">Percorrido libre</option>
+            <option value="newest">Máis recentes</option>
+            <option value="oldest">Máis antigas</option>
+            <option value="alpha">Texto grego A–Ω</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="activeFilters" class="active-filters" aria-live="polite"></div>
+      <div id="gallery" class="gallery" aria-busy="true"></div>
+
+      <div id="emptyState" class="empty-state hidden">
+        <span lang="el" aria-hidden="true">οὐδέν</span>
+        <h3>Non atopamos esa voz</h3>
+        <p>Proba con outro termo ou elimina os filtros.</p>
+        <button class="secondary-button" id="clearFilters" type="button">Limpar a procura</button>
+      </div>
+
+      <div id="loadError" class="empty-state hidden" role="alert">
+        <span aria-hidden="true">!</span>
+        <h3>Non se puido abrir o arquivo</h3>
+        <p>Comproba a conexión e volve cargar a páxina.</p>
+      </div>
+    </section>
+
+    <section class="invitation" aria-labelledby="invitation-title">
+      <p class="eyebrow">Arquivo colectivo</p>
+      <h2 id="invitation-title">Viches grego escrito<br>na rúa?</h2>
+      <p>
+        Cada imaxe pode gardar unha historia lingüística, política ou cotiá.
+        Axúdanos a ampliar este mapa de voces.
+      </p>
+      <button class="primary-button" type="button" data-open-contribute>Achegar unha imaxe</button>
+    </section>
+  </main>
+
+  <footer>
+    <div>
+      <span class="footer-mark" lang="el">γραφές</span>
+      <p>Un arquivo do presente para ler a longa vida do grego.</p>
     </div>
-  </div>
+    <p>Proxecto Graphes · <span id="currentYear"></span></p>
+  </footer>
 
-  <footer>© 2025 · Proxecto Graphes</footer>
+  <dialog id="imageDialog" class="image-dialog" aria-labelledby="dialogTitle">
+    <div class="dialog-shell">
+      <button class="dialog-close icon-button" type="button" data-close-dialog aria-label="Pechar">×</button>
+      <button class="dialog-nav previous" id="prevBtn" type="button" aria-label="Imaxe anterior">←</button>
+      <figure class="dialog-visual">
+        <img id="dialogImage" src="" alt="">
+        <figcaption id="imagePosition"></figcaption>
+      </figure>
+      <article class="dialog-info">
+        <p class="eyebrow" id="dialogCategory"></p>
+        <h2 id="dialogTitle" lang="el"></h2>
+        <p class="transcription" id="dialogTranscription"></p>
+        <dl class="record-meta">
+          <div>
+            <dt>Lugar e data</dt>
+            <dd id="dialogLocation"></dd>
+          </div>
+        </dl>
+        <section>
+          <h3>Da lingua antiga á moderna</h3>
+          <div id="dialogEtymology"></div>
+        </section>
+        <section>
+          <h3>Lectura</h3>
+          <div id="dialogComment"></div>
+        </section>
+      </article>
+      <button class="dialog-nav next" id="nextBtn" type="button" aria-label="Imaxe seguinte">→</button>
+    </div>
+  </dialog>
 
-  <script>
-  const btn = document.getElementById("themeToggle");
-  btn.addEventListener("click", () => {
-    document.body.classList.toggle("light");
-    btn.textContent = document.body.classList.contains("light") ? "☀" : "☾";
-  });
-  </script>
+  <dialog id="aboutDialog" class="sheet-dialog" aria-labelledby="aboutTitle">
+    <div class="sheet">
+      <button class="dialog-close icon-button" type="button" data-close-dialog aria-label="Pechar">×</button>
+      <p class="eyebrow">Sobre o proxecto</p>
+      <h2 id="aboutTitle">Unha lingua non vive só nos libros.</h2>
+      <p class="lead">
+        <span lang="el">Γραφές</span> reúne escritura grega atopada no espazo público e
+        acompáñaa dunha lectura pensada para quen estuda ou sente curiosidade polo grego antigo.
+      </p>
+      <div class="principles">
+        <section>
+          <span>01</span>
+          <h3>Mirar o presente</h3>
+          <p>A rúa como documento vivo: protesta, humor, comercio, afecto e memoria.</p>
+        </section>
+        <section>
+          <span>02</span>
+          <h3>Recoñecer o pasado</h3>
+          <p>Etimoloxías e continuidades sen reducir o grego moderno a unha reliquia.</p>
+        </section>
+        <section>
+          <span>03</span>
+          <h3>Construír en común</h3>
+          <p>Un arquivo aberto a novas olladas, sempre con contexto e coidado editorial.</p>
+        </section>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="contributeDialog" class="sheet-dialog contribution-dialog" aria-labelledby="contributeTitle">
+    <div class="sheet">
+      <button class="dialog-close icon-button" type="button" data-close-dialog aria-label="Pechar">×</button>
+      <p class="eyebrow">Achegar ao arquivo</p>
+      <h2 id="contributeTitle">Comparte unha voz grega.</h2>
+      <p class="lead">Engade a foto e todo o contexto que coñezas. Poderás revisar a proposta antes de preparala.</p>
+
+      <form id="contributionForm">
+        <div class="form-grid">
+          <section class="form-section">
+            <h3><span>1</span> A imaxe</h3>
+            <label class="drop-zone" id="dropZone">
+              <input id="imageInput" name="image" type="file" accept="image/jpeg,image/png,image/webp,image/heic">
+              <img id="uploadPreview" class="hidden" alt="Previsualización da imaxe seleccionada">
+              <span class="drop-placeholder" id="dropPlaceholder">
+                <strong>Escolle ou arrastra unha foto</strong>
+                <small>JPG, PNG, WEBP ou HEIC · máximo 15 MB</small>
+              </span>
+            </label>
+            <p class="field-error" id="imageError" aria-live="polite"></p>
+          </section>
+
+          <section class="form-section">
+            <h3><span>2</span> O que di</h3>
+            <label>
+              <span>Texto en grego <b>*</b></span>
+              <textarea name="text" rows="3" required placeholder="Η ζωή…"></textarea>
+            </label>
+            <label>
+              <span>Transcrición ou lectura</span>
+              <input name="transcription" type="text" placeholder="I zoí…">
+            </label>
+            <div class="two-columns">
+              <label>
+                <span>Lugar <b>*</b></span>
+                <input name="place" type="text" required placeholder="Atenas, Exarchia">
+              </label>
+              <label>
+                <span>Ano aproximado</span>
+                <input name="year" type="number" inputmode="numeric" min="1900" max="2100" placeholder="2026">
+              </label>
+            </div>
+            <label>
+              <span>Tipo de testemuño</span>
+              <select name="type">
+                <option value="pintada">Pintada</option>
+                <option value="cartaz">Cartaz</option>
+                <option value="sinal">Sinal</option>
+                <option value="comercio">Comercio</option>
+                <option value="outro">Outro</option>
+              </select>
+            </label>
+          </section>
+
+          <section class="form-section">
+            <h3><span>3</span> A súa historia</h3>
+            <label>
+              <span>Que significa ou por que importa?</span>
+              <textarea name="comment" rows="4" placeholder="Contexto social, cultural ou persoal…"></textarea>
+            </label>
+            <label>
+              <span>Relación co grego antigo</span>
+              <textarea name="etymology" rows="4" placeholder="Palabras, raíces ou formas que recoñeces…"></textarea>
+            </label>
+            <label>
+              <span>Nome ou alcume</span>
+              <input name="credit" type="text" placeholder="Como queres aparecer nos créditos">
+            </label>
+            <label class="check-field">
+              <input name="permission" type="checkbox" required>
+              <span>Confirmo que podo compartir esta imaxe para a súa publicación no arquivo. <b>*</b></span>
+            </label>
+          </section>
+        </div>
+
+        <div id="submissionNotice" class="submission-notice hidden" aria-live="polite"></div>
+        <div class="form-actions">
+          <p>Revisaremos a información antes de incorporala á colección.</p>
+          <button class="primary-button" type="submit">Preparar a achega</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
